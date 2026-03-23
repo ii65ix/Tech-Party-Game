@@ -1,0 +1,92 @@
+{% extends "game/base.html" %}
+{% block title %}Play — Tech Party Game{% endblock %}
+{% block content %}
+  <div class="container" style="max-width: 720px">
+    <div class="fade-in">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <span class="text-secondary small">
+          Question {{ progress_index }} / {{ progress_total }}
+        </span>
+        {% if show_timer %}
+          <span id="timerPill" class="timer-pill">
+            <span aria-hidden="true">⏱</span>
+            <span id="timerValue">{{ timer_seconds }}</span>s
+          </span>
+        {% else %}
+          <span class="timer-pill text-secondary">Take your time</span>
+        {% endif %}
+      </div>
+      <div class="progress mb-4" role="progressbar" aria-valuenow="{{ progress_pct }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: {{ progress_pct }}%"></div>
+      </div>
+
+      <div class="card-game p-4 mb-4">
+        {% if game_mode == 'bug' %}
+          <p class="text-secondary small mb-2">What is wrong with this code?</p>
+          <div class="code-snippet mb-4">{{ question.text }}</div>
+        {% else %}
+          <h2 class="h5 mb-0 fw-semibold">{{ question.text }}</h2>
+        {% endif %}
+
+        <form id="quiz-form" method="post" action="{% url 'game:play' %}">
+          {% csrf_token %}
+          <input type="hidden" name="timed_out" id="timed_out" value="0" />
+
+          <label class="option-label mb-2 d-flex align-items-start gap-2">
+            <input type="radio" name="choice" value="A" required class="mt-1 flex-shrink-0" />
+            <span><strong class="text-secondary me-1">A.</strong> {{ question.option_a }}</span>
+          </label>
+          <label class="option-label mb-2 d-flex align-items-start gap-2">
+            <input type="radio" name="choice" value="B" class="mt-1 flex-shrink-0" />
+            <span><strong class="text-secondary me-1">B.</strong> {{ question.option_b }}</span>
+          </label>
+          <label class="option-label mb-2 d-flex align-items-start gap-2">
+            <input type="radio" name="choice" value="C" class="mt-1 flex-shrink-0" />
+            <span><strong class="text-secondary me-1">C.</strong> {{ question.option_c }}</span>
+          </label>
+          <label class="option-label mb-3 d-flex align-items-start gap-2">
+            <input type="radio" name="choice" value="D" class="mt-1 flex-shrink-0" />
+            <span><strong class="text-secondary me-1">D.</strong> {{ question.option_d }}</span>
+          </label>
+
+          <button type="submit" class="btn btn-accent w-100">Submit answer</button>
+        </form>
+      </div>
+      <p class="text-center small text-secondary mb-0">
+        <a href="{% url 'game:home' %}" class="text-secondary">Exit to home</a> (progress will be lost)
+      </p>
+    </div>
+  </div>
+  {% if show_timer %}
+    <script>
+      (function () {
+        const maxSec = {{ timer_seconds }};
+        let left = maxSec;
+        const el = document.getElementById("timerValue");
+        const pill = document.getElementById("timerPill");
+        const form = document.getElementById("quiz-form");
+        const timedOut = document.getElementById("timed_out");
+
+        const tick = setInterval(function () {
+          left -= 1;
+          if (el) el.textContent = left;
+          if (pill) {
+            pill.classList.remove("timer-warning", "timer-danger");
+            if (left <= 5) pill.classList.add("timer-danger");
+            else if (left <= 8) pill.classList.add("timer-warning");
+          }
+          if (left <= 0) {
+            clearInterval(tick);
+            timedOut.value = "1";
+            const inputs = form.querySelectorAll('input[name="choice"]');
+            inputs.forEach(function (i) {
+              i.removeAttribute("required");
+              i.checked = false;
+            });
+            form.submit();
+          }
+        }, 1000);
+      })();
+    </script>
+  {% endif %}
+{% endblock %}

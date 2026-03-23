@@ -82,3 +82,4 @@ If you are logged in, your display name on the home page defaults to your name/u
 - Edit questions in the admin, or change `seed_questions.py` and run `python manage.py seed_questions` (this **replaces** all questions).
 # Tech-Party-Game
 # Tech-Party-Game
+# Tech-Party-Game
