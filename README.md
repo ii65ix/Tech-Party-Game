@@ -58,32 +58,60 @@ If you are logged in, your display name on the home page defaults to your name/u
 
 ---
 
+## Deploy on Render (النشر على Render)
+
+**GitHub Pages لا يشغّل Django** — استخدم **Render** (أو أي PaaS) لرفع التطبيق الحقيقي. المشروع جاهز لـ Render عبر `build.sh` و `Procfile` و `render.yaml`.
+
+### طريقة سريعة (Blueprint)
+
+1. ارفع المشروع إلى مستودع **GitHub**.
+2. في [Render](https://render.com): **New** → **Blueprint** → اختر المستودع → Render يقرأ `render.yaml`.
+3. يُنشأ **Web Service** + قاعدة **PostgreSQL** ويُربط `DATABASE_URL` تلقائياً.
+4. بعد أول نشر ناجح، افتح **Shell** لخدمة الويب وشغّل مرة واحدة:
+   ```bash
+   python manage.py seed_questions
+   python manage.py createsuperuser
+   ```
+   (`seed_questions` يملأ 100 سؤالاً بلغتين؛ يمكن إعادة تشغيله لإعادة الضبط.)
+
+### طريقة يدوية (لوحة Render)
+
+1. **New** → **PostgreSQL** — أنشئ قاعدة بيانات (احفظ الرابط أو اربطها لاحقاً).
+2. **New** → **Web Service** — اربط نفس المستودع.
+3. اضبط:
+   - **Build command:** `chmod +x build.sh && ./build.sh`
+   - **Start command:** `gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT`
+4. في **Environment** أضف:
+   - `SECRET_KEY` — عشوائي طويل (أو استخدم Generate في Render).
+   - `DEBUG` = `False`
+   - `DATABASE_URL` — من قاعدة PostgreSQL (**Internal** أو **External** حسب ما يوصي Render).
+5. Render يضيف تلقائياً `RENDER_EXTERNAL_HOSTNAME` — الإعدادات تستخدمه لـ `ALLOWED_HOSTS` ولـ **CSRF** على `https://اسم-الخدمة.onrender.com` دون أن تنسى `CSRF_TRUSTED_ORIGINS` يدوياً (يمكنك إضافة نطاقات إضافية في المتغير نفسه إن لزم).
+
+### ملفات مهمة للنشر
+
+| File | Purpose |
+|------|---------|
+| `build.sh` | تثبيت الحزم، ترجمة الواجهة (`compile_locale` أو gettext)، `collectstatic`، `migrate` |
+| `Procfile` | تشغيل Gunicorn على `$PORT` |
+| `render.yaml` | تعريف خدمة الويب + PostgreSQL (Blueprint) |
+
+---
+
 ## Deploy Django (generic — أي منصة Python)
 
-هذه الأوامر تناسب معظم الخدمات التي تدعم `build` و `start` ومتغيرات البيئة:
+نفس فكرة البناء والتشغيل أعلاه يمكن استخدامها على Railway و Fly.io وغيرها:
 
-1. اربط المستودع من GitHub بالخدمة.
-2. أضف قاعدة بيانات **PostgreSQL** (أو ما توفره المنصة) وانسخ `DATABASE_URL` إن وُجد.
-3. **Build command:**  
-   `chmod +x build.sh && ./build.sh`
-4. **Start command:**  
-   `gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT`  
-   (بعض المنصات تضبط `$PORT` تلقائياً.)
-5. **Environment variables** (مثال — عدّل حسب اسم النطاق عندك):
-   - `SECRET_KEY` — سلسلة عشوائية طويلة وسرية
-   - `DEBUG` = `False`
-   - `ALLOWED_HOSTS` = اسم المضيف فقط، مثل `myapp.railway.app`
-   - `CSRF_TRUSTED_ORIGINS` = `https://myapp.railway.app` (مع `https://`)
-   - `DATABASE_URL` = رابط PostgreSQL إن وُجد
+1. اربط المستودع، أضف PostgreSQL و `DATABASE_URL`.
+2. **Build:** `chmod +x build.sh && ./build.sh`
+3. **Start:** `gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT`
+4. متغيرات: `SECRET_KEY`, `DEBUG=False`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, `DATABASE_URL`
 
-بعد أول نشر ناجح، من **Shell** على الخدمة:
+بعد أول نشر:
 
 ```bash
 python manage.py seed_questions
 python manage.py createsuperuser
 ```
-
-(`seed_questions` يعيد إدخال الأسئلة الـ 50 — شغّله مرة بعد أول إعداد لقاعدة البيانات.)
 
 ---
 

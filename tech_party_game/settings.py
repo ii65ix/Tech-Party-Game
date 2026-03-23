@@ -29,6 +29,11 @@ if render_host and render_host not in ALLOWED_HOSTS:
 
 csrf_origins = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in csrf_origins.split(",") if o.strip()]
+# Render: add HTTPS origin for CSRF when RENDER_EXTERNAL_HOSTNAME is set (no manual CSRF_TRUSTED_ORIGINS needed)
+if render_host:
+    _origin = f"https://{render_host}"
+    if _origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(_origin)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
