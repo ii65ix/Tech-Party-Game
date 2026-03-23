@@ -1,11 +1,12 @@
 {% extends "game/base.html" %}
-{% block title %}Play — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Play" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container" style="max-width: 720px">
     <div class="fade-in">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <span class="text-secondary small">
-          Question {{ progress_index }} / {{ progress_total }}
+          {% trans "Question" %} {{ progress_index }} / {{ progress_total }}
         </span>
         {% if show_timer %}
           <span id="timerPill" class="timer-pill">
@@ -13,7 +14,7 @@
             <span id="timerValue">{{ timer_seconds }}</span>s
           </span>
         {% else %}
-          <span class="timer-pill text-secondary">Take your time</span>
+          <span class="timer-pill text-secondary">{% trans "Take your time" %}</span>
         {% endif %}
       </div>
       <div class="progress mb-4" role="progressbar" aria-valuenow="{{ progress_pct }}" aria-valuemin="0" aria-valuemax="100">
@@ -22,7 +23,7 @@
 
       <div class="card-game p-4 mb-4">
         {% if game_mode == 'bug' %}
-          <p class="text-secondary small mb-2">What is wrong with this code?</p>
+          <p class="text-secondary small mb-2">{% trans "What is wrong with this code?" %}</p>
           <div class="code-snippet mb-4">{{ question.text }}</div>
         {% else %}
           <h2 class="h5 mb-0 fw-semibold">{{ question.text }}</h2>
@@ -49,11 +50,12 @@
             <span><strong class="text-secondary me-1">D.</strong> {{ question.option_d }}</span>
           </label>
 
-          <button type="submit" class="btn btn-accent w-100">Submit answer</button>
+          <button type="submit" class="btn btn-accent w-100">{% trans "Submit answer" %}</button>
         </form>
       </div>
       <p class="text-center small text-secondary mb-0">
-        <a href="{% url 'game:home' %}" class="text-secondary">Exit to home</a> (progress will be lost)
+        <a href="{% url 'game:home' %}" class="text-secondary">{% trans "Exit to home" %}</a>
+        ({% trans "progress will be lost" %})
       </p>
     </div>
   </div>

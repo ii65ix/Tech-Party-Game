@@ -3,9 +3,11 @@ import time
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
 from .models import Category, Question, Score
+from .utils import content_language
 
 MODE_SLUGS = {"quiz", "bug", "funny"}
 TIMER_SECONDS = {
@@ -31,17 +33,23 @@ def about(request):
 @require_http_methods(["POST"])
 def start_game(request, mode_slug):
     if mode_slug not in MODE_SLUGS:
-        messages.error(request, "Unknown game mode.")
+        messages.error(request, _("Unknown game mode."))
         return redirect("game:home")
 
     cat = Category.objects.filter(slug=mode_slug).first()
     if not cat:
-        messages.error(request, "Category not found. Run seed_questions.")
+        messages.error(request, _("Category not found. Run seed_questions."))
         return redirect("game:home")
 
-    qids = list(cat.questions.values_list("id", flat=True))
+    lang = content_language(request)
+    qids = list(
+        cat.questions.filter(language=lang).order_by("id").values_list("id", flat=True)
+    )
     if not qids:
-        messages.error(request, "No questions for this mode yet.")
+        messages.error(
+            request,
+            _("No questions for this mode in your language yet."),
+        )
         return redirect("game:home")
 
     player_name = (request.POST.get("player_name") or "").strip()[:100]
@@ -81,7 +89,7 @@ def _current_question(request):
 def play(request):
     g = _get_game(request)
     if not g:
-        messages.warning(request, "Start a game from the home page.")
+        messages.warning(request, _("Start a game from the home page."))
         return redirect("game:home")
 
     if request.method == "GET":
@@ -121,7 +129,7 @@ def play(request):
         choice = ""
         timed_out = True
     elif choice not in {"A", "B", "C", "D"}:
-        messages.error(request, "Pick A, B, C, or D.")
+        messages.error(request, _("Pick A, B, C, or D."))
         return redirect("game:play")
     elif g.get("question_shown_at") and mode != "funny":
         limit = TIMER_SECONDS.get(mode, 12)
@@ -197,7 +205,7 @@ def feedback(request):
 def result(request):
     g = _get_game(request)
     if not g:
-        messages.warning(request, "No game in progress.")
+        messages.warning(request, _("No game in progress."))
         return redirect("game:home")
 
     total = len(g["qids"])
@@ -218,9 +226,9 @@ def result(request):
     del request.session["game"]
 
     mode_labels = {
-        "quiz": "Quiz Mode",
-        "bug": "Bug Hunter",
-        "funny": "Who is Most Likely",
+        "quiz": _("Quiz Mode"),
+        "bug": _("Bug Hunter"),
+        "funny": _("Who is Most Likely"),
     }
 
     return render(

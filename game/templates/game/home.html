@@ -1,23 +1,24 @@
 {% extends "game/base.html" %}
-{% block title %}Home — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Home" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container">
     <div class="text-center mb-5 fade-in">
       <h1 class="display-5 fw-bold mb-3">
-        <span class="hero-gradient">Tech Party Game</span>
+        <span class="hero-gradient">{% trans "Tech Party Game" %}</span>
       </h1>
       <p class="lead text-secondary col-lg-8 mx-auto mb-4">
-        Pick a mode: quiz your knowledge, hunt bugs in broken code, or vote on hilarious tech scenarios.
+        {% trans "Pick a mode: quiz your knowledge, hunt bugs in broken code, or vote on hilarious tech scenarios." %}
       </p>
       <div class="row g-2 justify-content-center align-items-end mb-5 col-lg-6 mx-auto fade-in-delay">
         <div class="col-md-8">
-          <label for="player_name" class="form-label text-secondary small mb-1">Display name (optional)</label>
+          <label for="player_name" class="form-label text-secondary small mb-1">{% trans "Display name (optional)" %}</label>
           <input
             type="text"
             name="player_name"
             id="player_name"
             class="form-control bg-dark text-light border-secondary"
-            placeholder="Coder123"
+            placeholder="{% trans 'Coder123' %}"
             maxlength="100"
             value="{% if request.user.is_authenticated %}{% firstof request.user.get_full_name request.user.username '' %}{% endif %}"
           />
@@ -29,42 +30,42 @@
       <div class="col-md-4">
         <div class="card-game p-4 h-100 d-flex flex-column">
           <div class="mb-3 fs-2">🧠</div>
-          <h2 class="h4 mb-2">Quiz Mode</h2>
+          <h2 class="h4 mb-2">{% trans "Quiz Mode" %}</h2>
           <p class="text-secondary flex-grow-1 small">
-            Multiple choice programming questions. One at a time, timed rounds, and a running score.
+            {% trans "Multiple choice programming questions. One at a time, timed rounds, and a running score." %}
           </p>
           <form action="{% url 'game:start_game' 'quiz' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="player_name" value="" class="sync-name" />
-            <button type="submit" class="btn btn-accent w-100">Play Quiz</button>
+            <button type="submit" class="btn btn-accent w-100">{% trans "Play Quiz" %}</button>
           </form>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card-game p-4 h-100 d-flex flex-column">
           <div class="mb-3 fs-2">🐛</div>
-          <h2 class="h4 mb-2">Bug Hunter</h2>
+          <h2 class="h4 mb-2">{% trans "Bug Hunter" %}</h2>
           <p class="text-secondary flex-grow-1 small">
-            Read broken snippets and pick the fix. See the correct answer highlighted after each round.
+            {% trans "Read broken snippets and pick the fix. See the correct answer highlighted after each round." %}
           </p>
           <form action="{% url 'game:start_game' 'bug' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="player_name" value="" class="sync-name" />
-            <button type="submit" class="btn btn-accent w-100">Hunt Bugs</button>
+            <button type="submit" class="btn btn-accent w-100">{% trans "Hunt Bugs" %}</button>
           </form>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card-game p-4 h-100 d-flex flex-column">
           <div class="mb-3 fs-2">🎉</div>
-          <h2 class="h4 mb-2">Who is Most Likely</h2>
+          <h2 class="h4 mb-2">{% trans "Who is Most Likely" %}</h2>
           <p class="text-secondary flex-grow-1 small">
-            Silly tech party prompts. Vote for the funniest match — everyone gets points for playing.
+            {% trans "Silly tech party prompts. Vote for the funniest match — everyone gets points for playing." %}
           </p>
           <form action="{% url 'game:start_game' 'funny' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="player_name" value="" class="sync-name" />
-            <button type="submit" class="btn btn-accent w-100">Start Party</button>
+            <button type="submit" class="btn btn-accent w-100">{% trans "Start Party" %}</button>
           </form>
         </div>
       </div>

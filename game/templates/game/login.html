@@ -1,9 +1,10 @@
 {% extends "game/base.html" %}
-{% block title %}Login — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Log in" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container" style="max-width: 420px">
     <div class="fade-in">
-      <h1 class="h4 mb-4 text-center">Log in</h1>
+      <h1 class="h4 mb-4 text-center">{% trans "Log in" %}</h1>
       <div class="card-game p-4">
         <form method="post" action="{% url 'game:login' %}">
           {% csrf_token %}
@@ -14,7 +15,7 @@
             <div class="alert alert-danger small">{{ form.non_field_errors }}</div>
           {% endif %}
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_username">Username</label>
+            <label class="form-label text-secondary small" for="id_username">{% trans "Username" %}</label>
             <input
               type="text"
               name="username"
@@ -29,7 +30,7 @@
             {% endif %}
           </div>
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_password">Password</label>
+            <label class="form-label text-secondary small" for="id_password">{% trans "Password" %}</label>
             <input
               type="password"
               name="password"
@@ -41,10 +42,10 @@
               <div class="text-danger small mt-1">{{ form.password.errors }}</div>
             {% endif %}
           </div>
-          <button type="submit" class="btn btn-accent w-100 mb-3">Log in</button>
+          <button type="submit" class="btn btn-accent w-100 mb-3">{% trans "Log in" %}</button>
           <p class="text-center text-secondary small mb-0">
-            No account?
-            <a href="{% url 'game:register' %}">Create one</a>
+            {% trans "No account?" %}
+            <a href="{% url 'game:register' %}">{% trans "Create one" %}</a>
           </p>
         </form>
       </div>

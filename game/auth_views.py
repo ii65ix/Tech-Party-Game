@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 
 from .forms import SignUpForm
@@ -30,7 +31,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, "Account created. Welcome!")
+            messages.success(request, _("Account created. Welcome!"))
             return redirect("game:home")
     else:
         form = SignUpForm()
@@ -46,7 +47,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, f"Welcome back, {user.username}!")
+            messages.success(
+                request,
+                _("Welcome back, %(username)s!") % {"username": user.username},
+            )
             return redirect(_safe_next(request))
     else:
         form = AuthenticationForm()
@@ -57,7 +61,7 @@ def login_view(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        messages.info(request, "You have been logged out.")
+        messages.info(request, _("You have been logged out."))
         return redirect("game:home")
     return redirect("game:home")
 

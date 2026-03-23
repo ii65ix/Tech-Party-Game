@@ -35,31 +35,55 @@ Open **http://127.0.0.1:8000/** for the game and **http://127.0.0.1:8000/admin/*
 
 If you are logged in, your display name on the home page defaults to your name/username and scores are saved to your user.
 
+### Arabic & English (العربية والإنجليزية)
+
+- Use the **language** dropdown in the navbar: **English** or **العربية** (stored in the session/cookie via Django’s `set_language`).
+- **Questions** are stored twice in the database (`language=en` and `language=ar`) — 100 rows after `seed_questions`. The active UI language picks the matching set.
+- **Interface strings** (buttons, menus, messages) are translated via `locale/ar/LC_MESSAGES/django.po`. Compile them with either:
+  - `python manage.py compilemessages` (requires GNU **gettext** / `msgfmt`), or
+  - `python compile_locale.py` (uses **polib**, no gettext — works on Windows out of the box).
+  The `build.sh` script runs `compilemessages` when `msgfmt` exists; otherwise it runs `compile_locale.py` automatically.
+
 ---
 
-## Deploy on Render (النشر على Render)
+## GitHub + GitHub Pages (مهم)
 
-1. Push this project to **GitHub**.
-2. In [Render](https://render.com), create a **PostgreSQL** database (free tier is fine).
-3. Create a **Web Service** from the same repo:
-   - **Build command:** `chmod +x build.sh && ./build.sh`
-   - **Start command:** `gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT`
-4. In the web service **Environment** tab, add:
-   - `SECRET_KEY` — long random string (Render can generate one).
+- **GitHub** مناسب جداً لرفع **كود المشروع** (`git push`) والنسخ الاحتياطي والتعاون.
+- **GitHub Pages** يستضيف **مواقع ثابتة فقط** (HTML / CSS / JavaScript بدون سيرفر Python خلفها).  
+  **لا يمكن تشغيل مشروع Django كامل** (قاعدة بيانات، تسجيل دخول، لوحة إدارة) على GitHub Pages لأنها لا تشغّل بايثون ولا Gunicorn.
+
+إذا أردت **لعبة تعمل على الإنترنت** بنفس هذا المشروع (Django)، تحتاج خدمة **استضافة Python** تربطها بمستودع GitHub، مثل: **Railway**، **Fly.io**، **PythonAnywhere**، **Koyeb**، أو غيرها — وليس GitHub Pages.
+
+**ملخص:** استخدم GitHub للمستودع، واستخدم أي منصة تدعم تطبيقات Python للنشر الفعلي.
+
+---
+
+## Deploy Django (generic — أي منصة Python)
+
+هذه الأوامر تناسب معظم الخدمات التي تدعم `build` و `start` ومتغيرات البيئة:
+
+1. اربط المستودع من GitHub بالخدمة.
+2. أضف قاعدة بيانات **PostgreSQL** (أو ما توفره المنصة) وانسخ `DATABASE_URL` إن وُجد.
+3. **Build command:**  
+   `chmod +x build.sh && ./build.sh`
+4. **Start command:**  
+   `gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT`  
+   (بعض المنصات تضبط `$PORT` تلقائياً.)
+5. **Environment variables** (مثال — عدّل حسب اسم النطاق عندك):
+   - `SECRET_KEY` — سلسلة عشوائية طويلة وسرية
    - `DEBUG` = `False`
-   - `ALLOWED_HOSTS` = your Render hostname, e.g. `myapp.onrender.com`
-   - `CSRF_TRUSTED_ORIGINS` = `https://myapp.onrender.com` (use your real URL, with `https://`)
-   - `DATABASE_URL` — paste the **Internal Database URL** from the PostgreSQL instance (Render often fills this when you link the DB).
-5. After the first successful deploy, open **Shell** on the web service and run:
+   - `ALLOWED_HOSTS` = اسم المضيف فقط، مثل `myapp.railway.app`
+   - `CSRF_TRUSTED_ORIGINS` = `https://myapp.railway.app` (مع `https://`)
+   - `DATABASE_URL` = رابط PostgreSQL إن وُجد
 
-   ```bash
-   python manage.py seed_questions
-   python manage.py createsuperuser
-   ```
+بعد أول نشر ناجح، من **Shell** على الخدمة:
 
-   (`seed_questions` replaces all questions in the DB — run once after first deploy.)
+```bash
+python manage.py seed_questions
+python manage.py createsuperuser
+```
 
-**ملخص:** اربط قاعدة بيانات PostgreSQL على Render، عيّن المتغيرات أعلاه، واستخدم أوامر البناء والتشغيل المذكورة. بعد النشر شغّل `seed_questions` مرة واحدة ثم أنشئ حساب مدير من `createsuperuser`.
+(`seed_questions` يعيد إدخال الأسئلة الـ 50 — شغّله مرة بعد أول إعداد لقاعدة البيانات.)
 
 ---
 
@@ -68,8 +92,8 @@ If you are logged in, your display name on the home page defaults to your name/u
 - `game/` — app code: models, views, auth, templates, static assets
 - `game/management/commands/seed_questions.py` — loads 50 starter questions
 - `tech_party_game/` — project settings and root URLconf
-- `build.sh` — install deps, `collectstatic`, `migrate` (for Render)
-- `Procfile` — Gunicorn command (optional if you set start command in the dashboard)
+- `build.sh` — install deps, `collectstatic`, `migrate` (for PaaS deploys)
+- `Procfile` — Gunicorn start command (if the platform reads it)
 
 ## Game flow
 
@@ -80,7 +104,3 @@ If you are logged in, your display name on the home page defaults to your name/u
 ## Customizing
 
 - Edit questions in the admin, or change `seed_questions.py` and run `python manage.py seed_questions` (this **replaces** all questions).
-# Tech-Party-Game
-# Tech-Party-Game
-# Tech-Party-Game
-# Tech-Party-Game

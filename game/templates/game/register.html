@@ -1,35 +1,36 @@
 {% extends "game/base.html" %}
-{% block title %}Sign up — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Sign up" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container" style="max-width: 420px">
     <div class="fade-in">
-      <h1 class="h4 mb-4 text-center">Create account</h1>
+      <h1 class="h4 mb-4 text-center">{% trans "Create account" %}</h1>
       <div class="card-game p-4">
         <form method="post" action="{% url 'game:register' %}">
           {% csrf_token %}
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_username">Username</label>
+            <label class="form-label text-secondary small" for="id_username">{% trans "Username" %}</label>
             {{ form.username }}
             {% if form.username.errors %}
               <div class="text-danger small mt-1">{{ form.username.errors }}</div>
             {% endif %}
           </div>
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_email">Email (optional)</label>
+            <label class="form-label text-secondary small" for="id_email">{% trans "Email (optional)" %}</label>
             {{ form.email }}
             {% if form.email.errors %}
               <div class="text-danger small mt-1">{{ form.email.errors }}</div>
             {% endif %}
           </div>
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_password1">Password</label>
+            <label class="form-label text-secondary small" for="id_password1">{% trans "Password" %}</label>
             {{ form.password1 }}
             {% if form.password1.errors %}
               <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
             {% endif %}
           </div>
           <div class="mb-3">
-            <label class="form-label text-secondary small" for="id_password2">Confirm password</label>
+            <label class="form-label text-secondary small" for="id_password2">{% trans "Confirm password" %}</label>
             {{ form.password2 }}
             {% if form.password2.errors %}
               <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
@@ -38,10 +39,10 @@
           {% if form.non_field_errors %}
             <div class="alert alert-danger small">{{ form.non_field_errors }}</div>
           {% endif %}
-          <button type="submit" class="btn btn-accent w-100 mb-3">Sign up</button>
+          <button type="submit" class="btn btn-accent w-100 mb-3">{% trans "Sign up" %}</button>
           <p class="text-center text-secondary small mb-0">
-            Already have an account?
-            <a href="{% url 'game:login' %}">Log in</a>
+            {% trans "Already have an account?" %}
+            <a href="{% url 'game:login' %}">{% trans "Log in" %}</a>
           </p>
         </form>
       </div>

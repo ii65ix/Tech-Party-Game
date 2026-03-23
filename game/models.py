@@ -17,6 +17,12 @@ class Category(models.Model):
 
 
 class Question(models.Model):
+    language = models.CharField(
+        max_length=5,
+        choices=[("en", "English"), ("ar", "Arabic")],
+        default="en",
+        db_index=True,
+    )
     text = models.TextField()
     option_a = models.CharField(max_length=500)
     option_b = models.CharField(max_length=500)
@@ -34,6 +40,9 @@ class Question(models.Model):
 
     class Meta:
         ordering = ["id"]
+        indexes = [
+            models.Index(fields=["category", "language"]),
+        ]
 
     @property
     def options_list(self):

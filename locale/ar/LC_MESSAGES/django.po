@@ -1,0 +1,226 @@
+# Arabic translations for Tech Party Game
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "English"
+msgstr "English"
+
+msgid "Arabic"
+msgstr "العربية"
+
+msgid "Tech Party Game"
+msgstr "لعبة حفلة التقنية"
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "About"
+msgstr "عن اللعبة"
+
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+msgid "Log out"
+msgstr "تسجيل الخروج"
+
+msgid "Log in"
+msgstr "تسجيل الدخول"
+
+msgid "Sign up"
+msgstr "إنشاء حساب"
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "Tech Party Game — learn programming concepts the fun way."
+msgstr "لعبة حفلة التقنية — تعلّم مفاهيم البرمجة بطريقة ممتعة."
+
+msgid "Pick a mode: quiz your knowledge, hunt bugs in broken code, or vote on hilarious tech scenarios."
+msgstr "اختر وضعاً: اختبر معلوماتك، أو صدّ الأخطاء في الشيفرة، أو صوّت على مواقف تقنية مضحكة."
+
+msgid "Display name (optional)"
+msgstr "الاسم المعروض (اختياري)"
+
+msgid "Coder123"
+msgstr "Coder123"
+
+msgid "Quiz Mode"
+msgstr "وضع الاختبار"
+
+msgid "Multiple choice programming questions. One at a time, timed rounds, and a running score."
+msgstr "أسئلة برمجية متعددة الخيارات. سؤال واحد في كل مرة، مع وقت محدد ونتيجة تراكمية."
+
+msgid "Play Quiz"
+msgstr "ابدأ الاختبار"
+
+msgid "Bug Hunter"
+msgstr "صائد الأخطاء"
+
+msgid "Read broken snippets and pick the fix. See the correct answer highlighted after each round."
+msgstr "اقرأ مقاطع شيفرة معطوبة واختر الإصلاح. يُبرز الإجابة الصحيحة بعد كل جولة."
+
+msgid "Hunt Bugs"
+msgstr "اصطد الأخطاء"
+
+msgid "Who is Most Likely"
+msgstr "من الأرجح؟"
+
+msgid "Silly tech party prompts. Vote for the funniest match — everyone gets points for playing."
+msgstr "مواقف تقنية مضحكة. صوّت على الأنسب — الجميع يحصل على نقاط."
+
+msgid "Start Party"
+msgstr "ابدأ الحفلة"
+
+msgid "Play"
+msgstr "العب"
+
+msgid "Question"
+msgstr "سؤال"
+
+msgid "Take your time"
+msgstr "خذ وقتك"
+
+msgid "What is wrong with this code?"
+msgstr "ما الخطأ في هذا الكود؟"
+
+msgid "Submit answer"
+msgstr "إرسال الإجابة"
+
+msgid "Exit to home"
+msgstr "الخروج للرئيسية"
+
+msgid "progress will be lost"
+msgstr "ستُفقد التقدّم"
+
+msgid "Answer"
+msgstr "الإجابة"
+
+msgid "Time's up"
+msgstr "انتهى الوقت"
+
+msgid "Nice!"
+msgstr "ممتاز!"
+
+msgid "Not quite"
+msgstr "ليس تماماً"
+
+msgid "No answer was submitted in time."
+msgstr "لم تُرسل إجابة ضمن الوقت."
+
+msgid "Options"
+msgstr "الخيارات"
+
+msgid "your choice"
+msgstr "اختيارك"
+
+msgid "See results"
+msgstr "عرض النتيجة"
+
+msgid "Next question"
+msgstr "السؤال التالي"
+
+msgid "Results"
+msgstr "النتائج"
+
+msgid "Great run, %(name)s!"
+msgstr "أحسنت يا %(name)s!"
+
+msgid "Outstanding — you are on fire!"
+msgstr "رائع — أداء ممتاز!"
+
+msgid "Solid work — keep practicing!"
+msgstr "عمل جيد — واصل التمرين!"
+
+msgid "Every round makes you sharper. Try again!"
+msgstr "كل جولة تصقل مهاراتك. حاول مجدداً!"
+
+msgid "Back to home"
+msgstr "العودة للرئيسية"
+
+msgid "About Tech Party Game"
+msgstr "عن لعبة حفلة التقنية"
+
+msgid "Tech Party Game is a small Django app built to make programming concepts stick through play. Quiz Mode tests fundamentals with a countdown; Bug Hunter asks you to spot what is broken in short code snippets; Who is Most Likely is a lighthearted party mode where every pick counts as a point — perfect for groups or solo smiles."
+msgstr "لعبة حفلة التقنية تطبيق Django صغير يجعل مفاهيم البرمجة تثبت باللعب. وضع الاختبار يختبر الأساسيات مع عدّاد وقت؛ صائد الأخطاء يطلب منك اكتشاف الخلل في مقاطع شيفرة قصيرة؛ وضع «من الأرجح؟» حفلة خفيفة حيث كل اختيار يمنح نقطة — مناسب للجماعة أو اللعب الفردي."
+
+msgid "Admins can manage categories, questions, and browse saved scores from the Django admin panel. Have fun and keep learning!"
+msgstr "يمكن للمسؤولين إدارة التصنيفات والأسئلة واستعراض النتائج من لوحة إدارة Django. استمتع وواصل التعلم!"
+
+msgid "Play now"
+msgstr "العب الآن"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "No account?"
+msgstr "لا تملك حساباً؟"
+
+msgid "Create one"
+msgstr "أنشئ حساباً"
+
+msgid "Create account"
+msgstr "إنشاء حساب"
+
+msgid "Email (optional)"
+msgstr "البريد الإلكتروني (اختياري)"
+
+msgid "Confirm password"
+msgstr "تأكيد كلمة المرور"
+
+msgid "Already have an account?"
+msgstr "لديك حساب بالفعل؟"
+
+msgid "Your profile"
+msgstr "ملفك الشخصي"
+
+msgid "Signed in as"
+msgstr "مسجّل الدخول كـ"
+
+msgid "Recent scores"
+msgstr "أحدث النتائج"
+
+msgid "Mode"
+msgstr "الوضع"
+
+msgid "Score"
+msgstr "النتيجة"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "No saved games yet. Play a round on the home page!"
+msgstr "لا توجد نتائج محفوظة بعد. العب جولة من الصفحة الرئيسية!"
+
+msgid "Optional."
+msgstr "اختياري."
+
+msgid "Unknown game mode."
+msgstr "وضع لعب غير معروف."
+
+msgid "Category not found. Run seed_questions."
+msgstr "التصنيف غير موجود. شغّل seed_questions."
+
+msgid "No questions for this mode in your language yet."
+msgstr "لا توجد أسئلة لهذا الوضع بلغتك بعد."
+
+msgid "Start a game from the home page."
+msgstr "ابدأ لعبة من الصفحة الرئيسية."
+
+msgid "Pick A, B, C, or D."
+msgstr "اختر A أو B أو C أو D."
+
+msgid "No game in progress."
+msgstr "لا توجد لعبة جارية."
+
+msgid "Account created. Welcome!"
+msgstr "تم إنشاء الحساب. أهلاً بك!"
+
+msgid "Welcome back, %(username)s!"
+msgstr "مرحباً بعودتك، %(username)s!"
+
+msgid "You have been logged out."
+msgstr "تم تسجيل خروجك."

@@ -1,29 +1,39 @@
 {% extends "game/base.html" %}
-{% block title %}Profile — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Profile" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container col-lg-8">
     <div class="fade-in">
-      <h1 class="h4 mb-2">Your profile</h1>
+      <h1 class="h4 mb-2">{% trans "Your profile" %}</h1>
       <p class="text-secondary mb-4">
-        Signed in as <span class="text-info fw-semibold">{{ user.username }}</span>
+        {% trans "Signed in as" %}
+        <span class="text-info fw-semibold">{{ user.username }}</span>
       </p>
 
       <div class="card-game p-4 mb-4">
-        <h2 class="h6 text-secondary mb-3">Recent scores</h2>
+        <h2 class="h6 text-secondary mb-3">{% trans "Recent scores" %}</h2>
         {% if scores %}
           <div class="table-responsive">
             <table class="table table-dark table-borderless align-middle mb-0 small">
               <thead>
                 <tr class="text-secondary">
-                  <th scope="col">Mode</th>
-                  <th scope="col">Score</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">{% trans "Mode" %}</th>
+                  <th scope="col">{% trans "Score" %}</th>
+                  <th scope="col">{% trans "Date" %}</th>
                 </tr>
               </thead>
               <tbody>
                 {% for s in scores %}
                   <tr>
-                    <td>{{ s.game_mode }}</td>
+                    <td>
+                      {% if s.game_mode == "quiz" %}
+                        {% trans "Quiz Mode" %}
+                      {% elif s.game_mode == "bug" %}
+                        {% trans "Bug Hunter" %}
+                      {% else %}
+                        {% trans "Who is Most Likely" %}
+                      {% endif %}
+                    </td>
                     <td>{{ s.score }} / {{ s.max_score }}</td>
                     <td>{{ s.created_at|date:"M j, Y H:i" }}</td>
                   </tr>
@@ -32,12 +42,12 @@
             </table>
           </div>
         {% else %}
-          <p class="text-secondary mb-0">No saved games yet. Play a round on the home page!</p>
+          <p class="text-secondary mb-0">{% trans "No saved games yet. Play a round on the home page!" %}</p>
         {% endif %}
       </div>
 
       <p class="text-center">
-        <a href="{% url 'game:home' %}" class="btn btn-accent">Play</a>
+        <a href="{% url 'game:home' %}" class="btn btn-accent">{% trans "Play" %}</a>
       </p>
     </div>
   </div>

@@ -15,8 +15,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ("text_preview", "category", "correct_answer")
-    list_filter = ("category",)
+    list_display = ("text_preview", "category", "language", "correct_answer")
+    list_filter = ("category", "language")
     search_fields = ("text", "option_a", "option_b")
 
     @admin.display(description="Question")

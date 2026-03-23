@@ -1,23 +1,20 @@
 {% extends "game/base.html" %}
-{% block title %}About — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "About" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container col-lg-8">
     <div class="fade-in">
-      <h1 class="h3 mb-4 hero-gradient">About Tech Party Game</h1>
+      <h1 class="h3 mb-4 hero-gradient">{% trans "About Tech Party Game" %}</h1>
       <div class="card-game p-4 p-lg-5">
         <p>
-          Tech Party Game is a small Django app built to make programming concepts stick through play. Quiz Mode
-          tests fundamentals with a countdown; Bug Hunter asks you to spot what is broken in short code snippets;
-          Who is Most Likely is a lighthearted party mode where every pick counts as a point — perfect for groups or
-          solo smiles.
+          {% trans "Tech Party Game is a small Django app built to make programming concepts stick through play. Quiz Mode tests fundamentals with a countdown; Bug Hunter asks you to spot what is broken in short code snippets; Who is Most Likely is a lighthearted party mode where every pick counts as a point — perfect for groups or solo smiles." %}
         </p>
         <p class="mb-0 text-secondary">
-          Admins can manage categories, questions, and browse saved scores from the Django admin panel. Have fun
-          and keep learning!
+          {% trans "Admins can manage categories, questions, and browse saved scores from the Django admin panel. Have fun and keep learning!" %}
         </p>
       </div>
       <p class="text-center mt-4">
-        <a href="{% url 'game:home' %}" class="btn btn-accent">Play now</a>
+        <a href="{% url 'game:home' %}" class="btn btn-accent">{% trans "Play now" %}</a>
       </p>
     </div>
   </div>

@@ -1,11 +1,14 @@
 {% extends "game/base.html" %}
-{% block title %}Results — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Results" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container text-center" style="max-width: 560px">
     <div class="fade-in">
       <p class="text-secondary small mb-2">{{ mode_label }}</p>
       {% if player_name %}
-        <p class="mb-4">Great run, <span class="text-info fw-semibold">{{ player_name }}</span>!</p>
+        <p class="mb-4">
+          {% blocktrans with name=player_name %}Great run, {{ name }}!{% endblocktrans %}
+        </p>
       {% endif %}
 
       <div
@@ -13,20 +16,20 @@
         style="--pct: {{ percent }}"
         data-label="{{ score }}/{{ max_score }}"
       ></div>
-      <p class="lead mb-2">{{ score }} out of {{ max_score }}</p>
+      <p class="lead mb-2">{{ score }} / {{ max_score }}</p>
       <p class="text-secondary mb-5">
         {% if percent >= 80 %}
-          Outstanding — you are on fire!
+          {% trans "Outstanding — you are on fire!" %}
         {% elif percent >= 50 %}
-          Solid work — keep practicing!
+          {% trans "Solid work — keep practicing!" %}
         {% else %}
-          Every round makes you sharper. Try again!
+          {% trans "Every round makes you sharper. Try again!" %}
         {% endif %}
       </p>
 
       <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
-        <a href="{{ home_url }}" class="btn btn-accent">Back to home</a>
-        <a href="{% url 'game:about' %}" class="btn btn-outline-light-subtle">About</a>
+        <a href="{{ home_url }}" class="btn btn-accent">{% trans "Back to home" %}</a>
+        <a href="{% url 'game:about' %}" class="btn btn-outline-light-subtle">{% trans "About" %}</a>
       </div>
     </div>
   </div>

@@ -1,30 +1,32 @@
 {% extends "game/base.html" %}
-{% block title %}Answer — Tech Party Game{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Answer" %} — {% trans "Tech Party Game" %}{% endblock %}
 {% block content %}
   <div class="container" style="max-width: 720px">
     <div class="fade-in">
       <h1 class="h4 mb-3">
         {% if timed_out %}
-          <span class="text-warning">Time&apos;s up</span>
+          <span class="text-warning">{% trans "Time's up" %}</span>
         {% elif was_correct %}
-          <span class="text-success">Nice!</span>
+          <span class="text-success">{% trans "Nice!" %}</span>
         {% else %}
-          <span class="text-danger">Not quite</span>
+          <span class="text-danger">{% trans "Not quite" %}</span>
         {% endif %}
       </h1>
 
       <div class="card-game p-4 mb-4">
         {% if game_mode == 'bug' %}
+          <p class="text-secondary small mb-2">{% trans "What is wrong with this code?" %}</p>
           <div class="code-snippet mb-4">{{ question.text }}</div>
         {% else %}
           <p class="fw-semibold mb-4">{{ question.text }}</p>
         {% endif %}
 
         {% if timed_out %}
-          <p class="small text-secondary mb-3">No answer was submitted in time.</p>
+          <p class="small text-secondary mb-3">{% trans "No answer was submitted in time." %}</p>
         {% endif %}
 
-        <p class="text-secondary small mb-2">Answers</p>
+        <p class="text-secondary small mb-2">{% trans "Options" %}</p>
         {% for letter, text in question.options_list %}
           {% if letter == correct_answer %}
             <div class="feedback-opt is-correct">
@@ -32,7 +34,7 @@
             </div>
           {% elif not timed_out and letter == user_choice and user_choice != correct_answer %}
             <div class="feedback-opt is-wrong">
-              <strong>{{ letter }}.</strong> {{ text }} <span class="small">(your choice)</span>
+              <strong>{{ letter }}.</strong> {{ text }} <span class="small">({% trans "your choice" %})</span>
             </div>
           {% else %}
             <div class="feedback-opt is-neutral text-secondary">
@@ -45,7 +47,7 @@
       <form method="post" action="{% url 'game:feedback' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-accent w-100">
-          {% if finished %}See results{% else %}Next question{% endif %}
+          {% if finished %}{% trans "See results" %}{% else %}{% trans "Next question" %}{% endif %}
         </button>
       </form>
     </div>
