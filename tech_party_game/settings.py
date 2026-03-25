@@ -122,6 +122,8 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Render/nginx send X-Forwarded-Host; needed for correct Host/redirects behind proxy
+USE_X_FORWARDED_HOST = not DEBUG
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True

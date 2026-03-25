@@ -12,6 +12,8 @@ services:
     runtime: python
     plan: free
     buildCommand: chmod +x build.sh && ./build.sh
+    # Runs after build, before Gunicorn — uses DATABASE_URL (fixes empty DB if build ran without it)
+    preDeployCommand: python manage.py migrate --noinput && python manage.py seed_questions
     startCommand: gunicorn tech_party_game.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
