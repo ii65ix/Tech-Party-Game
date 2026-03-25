@@ -11,6 +11,7 @@ urlpatterns = [
     path("accounts/profile/", auth_views.profile, name="profile"),
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
+    path("leaderboard/", views.leaderboard, name="leaderboard"),
     path("start/<slug:mode_slug>/", views.start_game, name="start_game"),
     path("play/", views.play, name="play"),
     path("feedback/", views.feedback, name="feedback"),

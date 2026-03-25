@@ -1,6 +1,7 @@
 import time
 
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -28,6 +29,21 @@ def home(request):
 
 def about(request):
     return render(request, "game/about.html")
+
+
+def leaderboard(request):
+    qs = (
+        Score.objects.filter(user__isnull=False)
+        .select_related("user")
+        .order_by("-created_at")
+    )
+    paginator = Paginator(qs, 30)
+    page = paginator.get_page(request.GET.get("page") or 1)
+    return render(
+        request,
+        "game/leaderboard.html",
+        {"page_obj": page},
+    )
 
 
 @require_http_methods(["POST"])

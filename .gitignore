@@ -1,3 +1,6 @@
+# Windows reserved device name — accidental file breaks `git add`
+nul
+
 .venv/
 __pycache__/
 *.py[cod]

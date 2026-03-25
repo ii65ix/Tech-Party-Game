@@ -224,3 +224,27 @@ msgstr "مرحباً بعودتك، %(username)s!"
 
 msgid "You have been logged out."
 msgstr "تم تسجيل خروجك."
+
+msgid "Leaderboard"
+msgstr "لوحة النتائج"
+
+msgid "Recent scores from everyone with an account. Guest games are not listed."
+msgstr "أحدث النتائج لكل من لديه حساب. جولات الضيف لا تظهر هنا."
+
+msgid "Player"
+msgstr "اللاعب"
+
+msgid "Pagination"
+msgstr "ترقيم الصفحات"
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "Page %(p)s of %(t)s"
+msgstr "صفحة %(p)s من %(t)s"
+
+msgid "No scores from registered players yet. Sign up and play!"
+msgstr "لا توجد نتائج من لاعبين مسجّلين بعد. أنشئي حساباً والعب!"

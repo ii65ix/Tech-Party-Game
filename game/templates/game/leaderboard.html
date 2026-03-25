@@ -1,0 +1,76 @@
+{% extends "game/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Leaderboard" %} — {% trans "Tech Party Game" %}{% endblock %}
+{% block content %}
+  <div class="container col-lg-10">
+    <div class="fade-in">
+      <h1 class="h4 mb-2">{% trans "Leaderboard" %}</h1>
+      <p class="text-secondary mb-4">
+        {% trans "Recent scores from everyone with an account. Guest games are not listed." %}
+      </p>
+
+      <div class="card-game p-4 mb-4">
+        {% if page_obj.object_list %}
+          <div class="table-responsive">
+            <table class="table table-dark table-borderless align-middle mb-0 small">
+              <thead>
+                <tr class="text-secondary">
+                  <th scope="col">{% trans "Player" %}</th>
+                  <th scope="col">{% trans "Mode" %}</th>
+                  <th scope="col">{% trans "Score" %}</th>
+                  <th scope="col">{% trans "Date" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in page_obj %}
+                  <tr>
+                    <td class="text-info fw-semibold">{{ s.user.username }}</td>
+                    <td>
+                      {% if s.game_mode == "quiz" %}
+                        {% trans "Quiz Mode" %}
+                      {% elif s.game_mode == "bug" %}
+                        {% trans "Bug Hunter" %}
+                      {% else %}
+                        {% trans "Who is Most Likely" %}
+                      {% endif %}
+                    </td>
+                    <td>{{ s.score }} / {{ s.max_score }}</td>
+                    <td>{{ s.created_at|date:"M j, Y H:i" }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          {% if page_obj.paginator.num_pages > 1 %}
+            <nav class="mt-4 d-flex justify-content-center" aria-label="{% trans 'Pagination' %}">
+              <ul class="pagination pagination-sm mb-0">
+                {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link bg-dark text-light border-secondary" href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+                  </li>
+                {% endif %}
+                <li class="page-item disabled">
+                  <span class="page-link bg-transparent text-secondary border-secondary">
+                    {% blocktrans with p=page_obj.number t=page_obj.paginator.num_pages %}Page {{ p }} of {{ t }}{% endblocktrans %}
+                  </span>
+                </li>
+                {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link bg-dark text-light border-secondary" href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+        {% else %}
+          <p class="text-secondary mb-0">{% trans "No scores from registered players yet. Sign up and play!" %}</p>
+        {% endif %}
+      </div>
+
+      <p class="text-center">
+        <a href="{% url 'game:home' %}" class="btn btn-accent">{% trans "Play" %}</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
